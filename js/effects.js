@@ -171,20 +171,26 @@
       }
       calcularRolagem();
       aoRolar.push(calcularRolagem);
-      window.addEventListener('resize', function () { medir(); });
+      /* só remede quando a LARGURA muda — no iPhone a barra do navegador
+         dispara "resize" ao rolar e isso apagava o desenho */
+      var larguraAnterior = box.clientWidth;
+      window.addEventListener('resize', function () {
+        if (box.clientWidth === larguraAnterior) return;
+        larguraAnterior = box.clientWidth;
+        medir();
+        desenhar(anguloRolagem, anguloRolagem * 0.6);
+      });
 
-      /* no celular: desenha só quando a rolagem muda (mais leve e liso) */
-      if (reduzMovimento || window.matchMedia('(max-width: 760px)').matches) {
-        var ultimoAng = null;
-        aoRolar.push(function () {
-          if (anguloRolagem === ultimoAng) return;
-          ultimoAng = anguloRolagem;
-          desenhar(anguloRolagem, anguloRolagem * 0.6);
-        });
+      if (reduzMovimento) {
+        aoRolar.push(function () { desenhar(anguloRolagem, anguloRolagem * 0.6); });
         desenhar(anguloRolagem, 0);
         return;
       }
+      var celular = window.matchMedia('(max-width: 760px)').matches;
+      var ultimoT = -1e9;
       laco(box, function (t) {
+        if (celular && t - ultimoT < 33) return;   /* ~30 quadros/s no celular */
+        ultimoT = t;
         var s = t / 1000;
         var balanco = Math.sin(s * 0.9) * 0.22 * (1 - Math.min(1, Math.abs(anguloRolagem) / Math.PI)); /* convida a rolar */
         desenhar(anguloRolagem + balanco, anguloRolagem * 0.6 + s * 0.15);
