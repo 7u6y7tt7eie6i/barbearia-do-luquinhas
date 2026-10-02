@@ -539,3 +539,31 @@ html { -webkit-tap-highlight-color: transparent; }
   .hero__visual .logo3d { width: 230px; }
   .hero__visual .status-card small { white-space: nowrap; }
 }
+
+/* =========================================================
+   Topo no celular igual ao computador:
+   título à esquerda, logo girando à direita
+   ========================================================= */
+@media (max-width: 760px) {
+  .hero { min-height: 0; padding-top: calc(var(--header-h) + 26px); padding-bottom: 44px; }
+  .hero__grid {
+    display: grid !important;
+    grid-template-columns: 1fr 122px;
+    column-gap: 10px; row-gap: 0;
+    align-items: center;
+  }
+  .hero__copy { display: contents; }
+  .hero .eyebrow { grid-column: 1; grid-row: 1; margin: 0 0 10px; font-size: 10px; letter-spacing: .16em; justify-content: flex-start; }
+  .hero__title { grid-column: 1; grid-row: 2; font-size: clamp(30px, 9vw, 40px); line-height: .98; }
+  .hero__visual {
+    grid-column: 2; grid-row: 1 / span 2;
+    order: 0; width: 122px !important; max-width: 122px !important; margin: 0 !important;
+    display: block;
+  }
+  .hero__visual .logo3d { width: 122px; }
+  .logo3d__img { width: 72%; }
+  .hero__visual .status-card { display: none; }
+  .hero__lead { grid-column: 1 / -1; margin: 18px 0 0; font-size: 15px; max-width: none; }
+  .hero__ctas { grid-column: 1 / -1; }
+  .hero__meta { grid-column: 1 / -1; }
+}

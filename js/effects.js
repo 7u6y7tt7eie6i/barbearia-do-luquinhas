@@ -381,17 +381,17 @@
     }
 
     medir();
-    var ultimo = -1;
-    function atualizar(forcar) {
-      var p = progressoNaTela(secao);
-      var quadro = Math.round(p * (QUADROS - 1));
-      if (quadro === ultimo && !forcar) return;
-      ultimo = quadro;
-      desenhar((quadro / QUADROS) * Math.PI * 3);
-    }
-    window.addEventListener('resize', function () { medir(); atualizar(true); });
-    aoRolar.push(atualizar);
-    atualizar(true);
+    /* gira sozinho o tempo todo (e um pouco mais rápido ao rolar) */
+    var celular = window.matchMedia('(max-width: 760px)').matches;
+    var extra = 0, ultimoT = 0;
+    window.addEventListener('resize', medir);
+    aoRolar.push(function () { extra = progressoNaTela(secao) * Math.PI * 2; });
+    if (reduzMovimento) { desenhar(0); return; }
+    laco(cv, function (t) {
+      if (celular && t - ultimoT < 33) return;   /* ~30 quadros/s no celular: mais leve */
+      ultimoT = t;
+      desenhar(t / 1000 * 1.2 + extra);
+    });
   })();
 
   rodarTodos();
