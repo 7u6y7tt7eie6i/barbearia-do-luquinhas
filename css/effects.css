@@ -636,3 +636,23 @@ html { -webkit-tap-highlight-color: transparent; }
 .hero__badge-rating { display: flex; width: fit-content; }
 .hero__copy .eyebrow { display: flex; }
 @media (max-width: 760px) { .hero__badge-rating { margin-inline: auto; } }
+
+/* =========================================================
+   Topo do celular: frase em cima, logo no meio, resto embaixo
+   ========================================================= */
+@media (max-width: 760px) {
+  .hero { padding-top: calc(var(--header-h) + 20px); padding-bottom: 36px; }
+  .hero__grid { justify-content: center; }
+  .hero__copy { display: contents; }
+  .hero__badge-rating { order: 1; margin: 0 auto 12px; }
+  .hero .eyebrow     { order: 2; margin: 0 0 10px; }
+  .hero__title       { order: 3; }
+  .hero__visual      { order: 4; margin: 6px 0 2px !important; }
+  .hero__visual .logo3d { width: min(70vw, 280px); }
+  .hero__lead        { order: 5; margin-top: 4px; }
+  .hero__ctas        { order: 6; margin-top: 20px; }
+  .hero__meta        { order: 7; margin-top: 14px; }
+}
+@media (max-width: 760px) and (max-height: 700px) {
+  .hero__visual .logo3d { width: min(56vw, 220px); }
+}
