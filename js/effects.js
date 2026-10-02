@@ -64,9 +64,18 @@
       pontos.push({ x: Math.cos(t) * raio, y: y, z: Math.sin(t) * raio, claro: i % 3 === 0 });
     }
 
+    var leve = window.matchMedia('(max-width: 760px)').matches;
+    var face = null;   /* cópia do logo já no tamanho certo (desenhar fica mais leve) */
     function medir() {
       S = box.clientWidth;
       ctx = prepararCanvas(cv, S, S);
+      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      var lado = Math.round(S * 0.64 * dpr);
+      face = document.createElement('canvas');
+      face.width = face.height = lado;
+      var fc = face.getContext('2d');
+      fc.imageSmoothingQuality = 'high';
+      fc.drawImage(img, 0, 0, lado, lado);
     }
 
     function desenhar(angLogo, angNuvem) {
@@ -102,7 +111,7 @@
 
       ctx.save();
       ctx.shadowColor = 'rgba(0,0,0,.55)';
-      ctx.shadowBlur = S * 0.08;
+      ctx.shadowBlur = leve ? 0 : S * 0.08;
       ctx.shadowOffsetY = S * 0.04;
       /* borda metálica */
       var g = ctx.createLinearGradient(c - r, 0, c + r, 0);
@@ -126,7 +135,7 @@
       ctx.save();
       ctx.translate(c, c);
       ctx.scale(sx, 1);
-      ctx.drawImage(img, -r, -r, r * 2, r * 2);
+      ctx.drawImage(face || img, -r, -r, r * 2, r * 2);
       ctx.restore();
 
       /* reflexo que passa pela face */
@@ -187,11 +196,13 @@
         return;
       }
       var celular = window.matchMedia('(max-width: 760px)').matches;
-      var ultimoT = -1e9;
       laco(box, function (t) {
-        if (celular && t - ultimoT < 33) return;   /* ~30 quadros/s no celular */
-        ultimoT = t;
         var s = t / 1000;
+        if (celular) {
+          /* no celular: gira sozinho o tempo todo, liso (60 quadros/s) */
+          desenhar(anguloRolagem + s * 0.9, s * 0.15);
+          return;
+        }
         var balanco = Math.sin(s * 0.9) * 0.22 * (1 - Math.min(1, Math.abs(anguloRolagem) / Math.PI)); /* convida a rolar */
         desenhar(anguloRolagem + balanco, anguloRolagem * 0.6 + s * 0.15);
       });
@@ -335,10 +346,11 @@
     if (!cv) return;
     var secao = cv.closest('.steps');
     var ctx, W, H, QUADROS = 90, pontos = [];
+    var celularPoste = window.matchMedia('(max-width: 760px)').matches;
     var CORES = [[200, 53, 46], [236, 230, 218], [45, 90, 168], [236, 230, 218]];
 
     /* corpo listrado */
-    var aneis = 46, volta = 34;
+    var aneis = celularPoste ? 30 : 46, volta = celularPoste ? 24 : 34;
     for (var a = 0; a < aneis; a++) {
       var y = -1 + (a / (aneis - 1)) * 2;
       for (var b = 0; b < volta; b++) {
@@ -394,7 +406,6 @@
     aoRolar.push(function () { extra = progressoNaTela(secao) * Math.PI * 2; });
     if (reduzMovimento) { desenhar(0); return; }
     laco(cv, function (t) {
-      if (celular && t - ultimoT < 33) return;   /* ~30 quadros/s no celular: mais leve */
       ultimoT = t;
       desenhar(t / 1000 * 1.2 + extra);
     });
