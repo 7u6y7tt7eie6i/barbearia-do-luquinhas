@@ -617,3 +617,22 @@ html { -webkit-tap-highlight-color: transparent; }
   animation: pole-spin 1.6s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) { .stripe { animation: none; } }
+
+/* selo de avaliação no topo */
+.hero__badge-rating {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 18px; padding: 7px 14px;
+  border: 1px solid var(--line-strong); border-radius: 99px;
+  font-size: 13px; color: var(--muted); background: rgba(236,230,218,.03);
+}
+.hero__badge-rating strong { color: var(--bone); }
+.hero__meta li:first-child { display: none; }   /* nota já aparece no selo */
+@media (max-width: 760px) {
+  .hero__badge-rating { margin: 4px 0 14px; font-size: 12px; padding: 6px 12px; }
+  .hero__title { font-size: clamp(38px, 11vw, 46px); }
+  .hero__lead { max-width: 34ch; font-size: 14.5px; }
+  .hero__meta { border-top: 0; padding-top: 0; margin-top: 16px; }
+}
+.hero__badge-rating { display: flex; width: fit-content; }
+.hero__copy .eyebrow { display: flex; }
+@media (max-width: 760px) { .hero__badge-rating { margin-inline: auto; } }

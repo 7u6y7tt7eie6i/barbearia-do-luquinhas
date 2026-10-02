@@ -582,3 +582,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* menu com 3 barrinhas */
+.menu-toggle span:first-child { top: 15px; }
+.menu-toggle span:nth-child(2) { top: 21px; transition: opacity .25s; }
+.menu-toggle span:last-child { top: 27px; }
+.menu-open .menu-toggle span:nth-child(2) { opacity: 0; }
