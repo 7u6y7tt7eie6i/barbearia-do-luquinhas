@@ -173,8 +173,14 @@
       aoRolar.push(calcularRolagem);
       window.addEventListener('resize', function () { medir(); });
 
-      if (reduzMovimento) {
-        aoRolar.push(function () { desenhar(anguloRolagem, anguloRolagem * 0.6); });
+      /* no celular: desenha só quando a rolagem muda (mais leve e liso) */
+      if (reduzMovimento || window.matchMedia('(max-width: 760px)').matches) {
+        var ultimoAng = null;
+        aoRolar.push(function () {
+          if (anguloRolagem === ultimoAng) return;
+          ultimoAng = anguloRolagem;
+          desenhar(anguloRolagem, anguloRolagem * 0.6);
+        });
         desenhar(anguloRolagem, 0);
         return;
       }

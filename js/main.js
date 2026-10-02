@@ -6,14 +6,13 @@
   var body = document.body;
   var header = document.querySelector('.header');
   var waFloat = document.querySelector('.wa-float');
-  var mobileBar = document.querySelector('.mobile-bar');
+
 
   /* ---------- header + botão flutuante ao rolar ---------- */
   function onScroll() {
     var y = window.scrollY;
     header.classList.toggle('is-scrolled', y > 20);
     waFloat.classList.toggle('is-visible', y > window.innerHeight * 0.6);
-    if (mobileBar) mobileBar.classList.toggle('is-visible', y > window.innerHeight * 0.5);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();

@@ -483,3 +483,59 @@ html { -webkit-tap-highlight-color: transparent; }
   .price-grid .pcard:nth-child(7) .pcard__price { grid-column: 2; grid-row: 2 / span 2; margin: 0; padding: 0; border: 0; }
   .services.section { padding-bottom: 40px; }
 }
+
+/* =========================================================
+   Correções celular: menu, desempenho, como funciona fixo
+   ========================================================= */
+
+/* "como funciona" sem efeito lateral: cartões em grade */
+.steps--grid .steps__pin { position: static; height: auto; overflow: visible; padding-block: var(--section-y); }
+.steps--grid .htrack {
+  width: auto; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+  padding: 0 var(--gutter); max-width: calc(var(--container) + var(--gutter) * 2); margin: 0 auto;
+  transform: none !important;
+}
+.steps--grid .hstep { width: auto; transform: none; padding: 24px 22px; }
+.steps--grid .hstep__dot { display: none; }
+.steps--grid .hstep h3 { font-size: 24px; }
+.steps--grid .hstep p { font-size: 14px; }
+@media (max-width: 1080px) { .steps--grid .htrack { grid-template-columns: repeat(2, 1fr); } .steps--grid .hstep--cta { grid-column: 1 / -1; } }
+@media (max-width: 760px) {
+  .steps--grid .steps__pin { padding-top: var(--section-y); gap: 28px; }
+  .steps--grid .htrack { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .steps--grid .hstep { padding: 18px 16px; border-radius: 12px; }
+  .steps--grid .hstep h3 { font-size: 19px; margin-top: 6px; }
+  .steps--grid .hstep p { font-size: 13px; }
+  .steps--grid .hstep--cta .btn { width: 100%; }
+}
+
+@media (max-width: 760px) {
+  /* MENU: o blur do cabeçalho prendia o menu dentro dele (bug ao abrir de novo) */
+  .header, .header.is-scrolled { -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .header.is-scrolled { background: rgba(11, 11, 11, .97); }
+  .nav { z-index: 1; overflow-y: auto; }
+  .nav__list a { transition: none; transform: none; opacity: 1; }
+
+  /* desempenho: tira camadas pesadas na rolagem */
+  body::before { display: none; }
+  .status-card { -webkit-backdrop-filter: none; backdrop-filter: none; background: #151412; }
+  .reveal { transform: none; transition: opacity .5s ease; }
+  .hstep, .pcard { transition: none; }
+  .poleband__tube { animation-duration: 2.4s; }
+
+  /* topo: logo já aparece na primeira tela, de frente, com o texto */
+  .hero { padding-top: calc(var(--header-h) + 12px); }
+  .hero__grid { display: flex; flex-direction: column; }
+  .hero__visual { order: -1; width: 230px; max-width: 230px; margin: 0 auto 4px; }
+  .hero__visual .status-card { margin-top: -10px; }
+  .hero .eyebrow { margin-top: 22px; margin-bottom: 12px; }
+  .hero__title { font-size: clamp(40px, 11.5vw, 52px); }
+
+  /* sem barra fixa embaixo */
+  .footer { padding-bottom: 0; }
+}
+@media (max-width: 760px) {
+  .hero__visual { width: 100%; max-width: none; display: flex; flex-direction: column; align-items: center; }
+  .hero__visual .logo3d { width: 230px; }
+  .hero__visual .status-card small { white-space: nowrap; }
+}
