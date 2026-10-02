@@ -606,3 +606,14 @@ html { -webkit-tap-highlight-color: transparent; }
   .hero__visual .logo3d { width: min(76vw, 300px); }
   .hero__meta li:first-child { margin-right: 4px; }
 }
+
+/* faixa listrada do rodapé também em movimento */
+.stripe {
+  --tile: 113.137px;
+  height: 8px;
+  background: repeating-linear-gradient(-45deg,
+    #c8352e 0 20px, #f4efe6 20px 40px, #2d5aa8 40px 60px, #f4efe6 60px 80px);
+  background-size: 113.137px 113.137px;
+  animation: pole-spin 1.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { .stripe { animation: none; } }
