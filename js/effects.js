@@ -186,7 +186,7 @@
       window.addEventListener('resize', function () {
         if (box.clientWidth === larguraAnterior) return;
         larguraAnterior = box.clientWidth;
-        medir();
+        medir(); desenhado = null;
         desenhar(anguloRolagem, anguloRolagem * 0.6);
       });
 
@@ -196,11 +196,18 @@
         return;
       }
       var celular = window.matchMedia('(max-width: 760px)').matches;
+      var atual = 0, desenhado = null;
       laco(box, function (t) {
         var s = t / 1000;
         if (celular) {
-          /* no celular: gira sozinho o tempo todo, liso (60 quadros/s) */
-          desenhar(anguloRolagem + s * 0.9, s * 0.15);
+          /* no celular: gira só quando a tela mexe — uma volta a cada
+             ~450px rolados, com suavização para ficar liso */
+          var alvo = window.scrollY / 450 * Math.PI * 2;
+          atual += (alvo - atual) * 0.18;
+          if (Math.abs(alvo - atual) < 0.0005) atual = alvo;
+          if (atual === desenhado) return;   /* parado: não redesenha */
+          desenhado = atual;
+          desenhar(atual, atual * 0.6);
           return;
         }
         var balanco = Math.sin(s * 0.9) * 0.22 * (1 - Math.min(1, Math.abs(anguloRolagem) / Math.PI)); /* convida a rolar */
