@@ -164,7 +164,8 @@
         var alt = window.innerHeight || 800;
         var centro = r.top + window.scrollY + r.height / 2;      /* posição na página */
         var frente = Math.max(alt / 2, centro);                   /* no celular: de frente ao abrir */
-        var p = limitar((window.scrollY + alt / 2 - frente) / (alt * 0.9), -1, 1);
+        var curso = window.innerWidth < 761 ? alt * 1.8 : alt * 0.9;   /* no celular gira mais devagar */
+        var p = limitar((window.scrollY + alt / 2 - frente) / curso, -1, 1);
         var quadro = Math.round((p + 1) / 2 * (QUADROS - 1));   /* quadro a quadro */
         anguloRolagem = (quadro / (QUADROS - 1) - 0.5) * Math.PI * 2;
       }

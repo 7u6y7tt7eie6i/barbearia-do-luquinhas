@@ -418,3 +418,68 @@ html { -webkit-tap-highlight-color: transparent; }
 }
 .stats { grid-template-columns: repeat(2, 1fr); }
 .btn--primary .icon { width: 1.35em; height: 1.35em; }
+
+/* =========================================================
+   Celular com cara de computador
+   (mesma composição do desktop, ajustada à tela pequena)
+   ========================================================= */
+@media (max-width: 760px) {
+  /* topo: texto à esquerda e logo em seguida, como no desktop */
+  .hero { padding-top: calc(var(--header-h) + 28px); padding-bottom: 48px; }
+  .hero__grid { gap: 0; }
+  .hero__visual { order: 0; max-width: 320px; margin: 36px auto 0; }
+  .hero__copy { text-align: left; margin-top: 0; }
+  .hero .eyebrow { justify-content: flex-start; }
+  .hero__title { font-size: clamp(44px, 13vw, 58px); }
+  .hero__lead { margin-inline: 0; font-size: 16px; margin-top: 20px; }
+  .hero__ctas { display: grid; grid-template-columns: 1.25fr 1fr; gap: 10px; margin-top: 28px; justify-content: stretch; }
+  .hero__ctas .btn { width: 100%; height: 52px; padding: 0 12px; font-size: 14px; }
+  .hero__meta { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 10px 22px; margin-top: 28px; padding-top: 20px; font-size: 13px; }
+
+  /* serviços em grade de 2 colunas, igual aos cartões do computador */
+  .price-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .price-grid .pcard:not(.pcard--extras) {
+    display: flex; flex-direction: column;
+    padding: 16px 14px 14px; border-radius: 12px; min-height: 0;
+  }
+  .price-grid .pcard:not(.pcard--extras) .pcard__num { font-size: 20px; }
+  .price-grid .pcard .pcard__num .tag { font-size: 8px; padding: 3px 6px; letter-spacing: .1em; }
+  .price-grid .pcard:not(.pcard--extras) h3 { margin-top: 12px; padding-top: 0; font-size: 19px; }
+  .price-grid .pcard:not(.pcard--extras) p { font-size: 12.5px; line-height: 1.45; margin: 6px 0 12px; }
+  .price-grid .pcard:not(.pcard--extras) .pcard__price {
+    margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); font-size: 34px;
+  }
+  .price-grid .pcard--extras { grid-column: 1 / -1; padding: 20px 18px; }
+  .price-grid .pcard--extras .chips { gap: 6px; }
+  .price-grid .pcard--extras .chips li { font-size: 12px; padding: 5px 10px; }
+  .price-grid .pcard--extras p { margin-top: 12px; padding-top: 0; }
+
+  /* botões lado a lado */
+  .location__ctas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .location__ctas .btn { width: 100%; padding: 0 10px; font-size: 14px; }
+  .cta__buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+  .cta__buttons .btn { width: 100%; height: 52px; padding: 0 10px; font-size: 14px; }
+  .section-head--split .btn { width: auto; }
+  .section-head--split { flex-wrap: nowrap; align-items: flex-end; }
+  .section-head--split .btn { height: 42px; padding: 0 14px; font-size: 13px; flex-shrink: 0; }
+  .section-head--split .btn .icon { display: none; }
+}
+@media (max-width: 380px) {
+  .hero__ctas .btn, .cta__buttons .btn, .location__ctas .btn { font-size: 13px; }
+  .price-grid .pcard:not(.pcard--extras) h3 { font-size: 17px; }
+  .price-grid .pcard:not(.pcard--extras) .pcard__price { font-size: 30px; }
+}
+@media (max-width: 760px) {
+  .price-grid .pcard:not(.pcard--extras) { align-items: stretch; text-align: left; }
+  .price-grid .pcard:not(.pcard--extras) .pcard__num { justify-content: space-between; }
+  /* o 7º cartão ocupa a linha inteira, com o preço ao lado */
+  .price-grid .pcard:nth-child(7) {
+    grid-column: 1 / -1;
+    display: grid !important; grid-template-columns: 1fr auto; column-gap: 16px; align-items: center !important;
+  }
+  .price-grid .pcard:nth-child(7) .pcard__num { grid-column: 1 / -1; }
+  .price-grid .pcard:nth-child(7) h3, .price-grid .pcard:nth-child(7) p { grid-column: 1; }
+  .price-grid .pcard:nth-child(7) p { margin-bottom: 0; }
+  .price-grid .pcard:nth-child(7) .pcard__price { grid-column: 2; grid-row: 2 / span 2; margin: 0; padding: 0; border: 0; }
+  .services.section { padding-bottom: 40px; }
+}
