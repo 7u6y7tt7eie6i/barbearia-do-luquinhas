@@ -34,6 +34,38 @@
     if (e.key === 'Escape') { setMenu(false); closeLightbox(); }
   });
 
+  /* ---------- título do topo: letras chegando uma a uma ---------- */
+  var splitTitle = document.querySelector('[data-split]');
+  if (splitTitle) {
+    splitTitle.setAttribute('aria-label', splitTitle.textContent.replace(/\s+/g, ' ').trim());
+    var charIndex = 0;
+    var splitNode = function (node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 1) { splitNode(child); return; }
+        if (child.nodeType !== 3) return;
+        var frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var word = document.createElement('span');
+          word.className = 'split-word';
+          word.setAttribute('aria-hidden', 'true');
+          Array.from(part).forEach(function (ch) {
+            var c = document.createElement('span');
+            c.className = 'split-char';
+            c.textContent = ch;
+            c.style.animationDelay = (150 + charIndex++ * 45) + 'ms';
+            word.appendChild(c);
+          });
+          frag.appendChild(word);
+        });
+        child.parentNode.replaceChild(frag, child);
+      });
+    };
+    splitNode(splitTitle);
+    splitTitle.classList.add('is-split');
+  }
+
   /* ---------- animação de entrada ---------- */
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {

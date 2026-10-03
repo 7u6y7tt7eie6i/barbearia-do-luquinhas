@@ -643,3 +643,70 @@ html { -webkit-tap-highlight-color: transparent; }
   .logo3d__img { width: 66%; }
   .hero__visual { margin: -10px 0 0 !important; }
 }
+
+/* =========================================================
+   Título do topo — letras chegando ao abrir a página
+   ========================================================= */
+.split-word { display: inline-block; white-space: nowrap; }
+.is-split .split-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.6em) rotate(8deg) scale(.9);
+  filter: blur(6px);
+  animation: char-in .8s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+.is-split .hero__title-accent .split-char {
+  animation-name: char-in, accent-glow;
+  animation-duration: .8s, 1.6s;
+  animation-fill-mode: forwards, none;
+}
+@keyframes char-in {
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+@keyframes accent-glow {
+  60% { text-shadow: 0 0 18px rgba(201, 164, 106, .7); }
+  100% { text-shadow: none; }
+}
+/* resto do topo entra depois do título */
+.hero__copy > .hero__lead.reveal  { transition-delay: .75s !important; }
+.hero__copy > .hero__ctas.reveal  { transition-delay: .95s !important; }
+.hero__copy > .hero__meta.reveal  { transition-delay: 1.1s !important; }
+@media (prefers-reduced-motion: reduce) {
+  .is-split .split-char { opacity: 1; transform: none; filter: none; animation: none; }
+}
+
+/* =========================================================
+   Celular: botão do WhatsApp e horário já na primeira tela
+   (o logo encolhe em telas baixas para tudo caber)
+   ========================================================= */
+@media (max-width: 760px) {
+  .hero { align-items: flex-start; padding-top: calc(var(--header-h) + 4px); padding-bottom: 28px; }
+  .hero__visual .logo3d { width: clamp(150px, calc(100svh - 500px), min(80vw, 340px)); }
+  .hero__visual { margin: 0 !important; }
+  .hero__badge-rating { margin: 2px 0 10px; }
+  .hero .eyebrow { margin-bottom: 8px; }
+  .hero__lead { margin-top: 12px; }
+  .hero__ctas { margin-top: 18px; }
+  .hero__meta { margin-top: 12px; }
+}
+
+/* =========================================================
+   Rodapé centralizado (sem o logo)
+   ========================================================= */
+.footer__grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 40px 32px; text-align: center; justify-items: center;
+}
+.footer__grid > div { grid-column: auto !important; }
+.footer__brand img { margin: 0 auto; }
+.footer__brand p { margin: 20px auto 0; }
+.footer__social { justify-content: center; }
+.footer__links { justify-items: center; }
+.footer__bottom { justify-content: center; text-align: center; gap: 8px 28px; }
+@media (max-width: 960px) {
+  .footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 560px) {
+  .footer__grid { grid-template-columns: 1fr !important; gap: 32px; }
+  .footer__bottom { flex-direction: column; align-items: center; }
+}
